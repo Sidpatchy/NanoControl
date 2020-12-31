@@ -1,0 +1,4 @@
+https://pimylifeup.com/using-ifttt-with-the-raspberry-pi/
+https://pypi.org/project/requests/
+https://blog.bearer.sh/consume-webhooks-with-python/
+

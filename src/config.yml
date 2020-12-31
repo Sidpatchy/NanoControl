@@ -1,0 +1,8 @@
+iftttWebHook: 
+application: NanoControl
+
+numLeaves: 2
+# numLeaves * number of led in each leaf = numPixels 
+numPixels: 24
+
+neopixelPin: board.D14
