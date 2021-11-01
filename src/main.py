@@ -50,6 +50,12 @@ def respond():
     elif action == 'heartbeat':
         setStatus.writeConfig('hardwareIntegration/status.yml', 'powered', True)
         setStatus.writeConfig('hardwareIntegration/status.yml', 'mode', 'heartbeat')
+    elif action == "pumpkin":
+        setStatus.writeConfig('hardwareIntegration/status.yml', 'powered', True)
+        setStatus.writeConfig('hardwareIntegration/status.yml', 'mode', 'pumpkin')
+    elif action == "white":
+        setStatus.writeConfig('hardwareIntegration/status.yml', 'powered', True)
+        setStatus.writeConfig('hardwareIntegration/status.yml', 'mode', 'white')
 
 
     return Response(status=200)

@@ -13,6 +13,7 @@ import random
 
 num_pixels = readConfig('config.yml', 'numPixels')
 numLeaves = readConfig('config.yml', 'numLeaves')
+pixels_per_leaf = int(num_pixels / numLeaves)
 neopixelPin = readConfig('config.yml', 'neopixelPin')
 
 pixels = neopixel.NeoPixel(board.D18, num_pixels)
@@ -259,19 +260,36 @@ def christmas(wait):
 
 # Because the Python library sucks
 def setLeaf(leafIndex, colour):
-    pixels[0 + (leafIndex * 12)] = (colour)
-    pixels[1 + (leafIndex * 12)] = (colour)
-    pixels[2 + (leafIndex * 12)] = (colour)
-    pixels[3 + (leafIndex * 12)] = (colour)
-    pixels[4 + (leafIndex * 12)] = (colour)
-    pixels[5 + (leafIndex * 12)] = (colour)
-    pixels[6 + (leafIndex * 12)] = (colour)
-    pixels[7 + (leafIndex * 12)] = (colour)
-    pixels[8 + (leafIndex * 12)] = (colour)
-    pixels[9 + (leafIndex * 12)] = (colour)
-    pixels[10 + (leafIndex * 12)] = (colour)
-    pixels[11 + (leafIndex * 12)] = (colour)
+    for i in range(pixels_per_leaf):
+        pixels[i + (leafIndex * pixels_per_leaf)] = (colour)
     pixels.show()
+
+def pumpkin():
+    states = []
+    for i in range(numLeaves):
+        states.append(False)
+
+    for i in range(numLeaves):
+        states[i] = True
+        
+        for index in range(numLeaves):
+            if states[i]:
+                setLeaf(index, (100, 100, 100))
+            else:
+                setLeaf(index, (0, 0, 0))
+        sleep(0.5)
+
+    states = []
+    for i in range(numLeaves):
+        states.append(False)
+
+    for index in range(numLeaves):
+        if states[i]:
+            setLeaf(index, (100, 100, 100))
+        else:
+            setLeaf(index, (0, 0, 0))
+    sleep(0.5)
+
 
 while True:
     powered = readConfig('hardwareIntegration/status.yml', 'powered')
@@ -297,6 +315,10 @@ while True:
             cascadingWhiteColour(1, [16, 255, 16])
         elif mode == 'christmas':
             christmas(1)
+        elif mode == "pumpkin":
+            pumpkin()
+        elif mode == "white":
+            pixels.fill((100, 100, 100))
     elif not powered:
         print('Inactive... sleeping for 1 second to reduce clock cycles.' )
         pixels.fill((0, 0, 0))
